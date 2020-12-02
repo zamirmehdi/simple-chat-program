@@ -22,7 +22,7 @@ def client_handler(client, addr, name):
             client.close()
             del online[client]
             send_to_all(bytes("%s has left the chat." % name, "utf7"))
-            print(name, addr, ': disconnected.')
+            print('disconnected:', name, addr, '.')
             break
 
         elif msg == "-help":
@@ -47,7 +47,7 @@ addresses = {}
 clients = {}
 online = {}
 size = 1024
-instruction = '  -quit: Quit the server\n' \
+instruction = '-quit: Quit the server\n' \
               '  -join [group_id]: join the group with specified ID\n' \
               '  -send [group_id] [message]: send the message to the group with specified ID\n' \
               '  -leave [group_id]: leave the group with specified ID'
@@ -60,7 +60,7 @@ print('Waiting for Client to connect...')
 while True:
     c, address = s.accept()
     client_name = c.recv(size).decode()
-    print('connected to:', client_name, address)
+    print('connected :', client_name, address, '.')
     addresses[c] = address
     c.send(bytes('welcome ' + client_name, 'utf-8'))
     Thread(target=client_handler, args=(c, address, client_name)).start()
