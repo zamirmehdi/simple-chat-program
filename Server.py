@@ -26,8 +26,7 @@ def client_handler(client, addr, name):
             break
 
         elif msg == "-help":
-            text = '  -exit: Quit\n'
-            client.send(bytes(text, 'utf-8'))
+            client.send(bytes(instruction, 'utf-8'))
 
         else:
             send_to_all(str.encode(msg), name + ": ")
@@ -48,6 +47,10 @@ addresses = {}
 clients = {}
 online = {}
 size = 1024
+instruction = '  -exit: Quit\n' \
+              '  -join [group_id]: join the group with specified ID' \
+              '  -send [group_id] [message]: send the message to the group with specified ID' \
+              '  -leave [group_id]: leave the group with specified ID'
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('localhost', 4422))
