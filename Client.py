@@ -11,21 +11,19 @@ print(c.recv(1024).decode())
 
 
 def send_msg():
-    # //message = sys.stdin.readline()
     message = input('\n> ')
+    c.send(bytes(message, "utf8"))
 
-    if message == "-exit":
+    if message == "-quit":
         c.close()
-        print('CHAT >  Disconnected Successfully!')
-    else:
-        c.send(bytes(message, "utf8"))
+        print('CHAT > Disconnected Successfully!')
 
 
 def receive_msg():
     while True:
         try:
             incoming_message = c.recv(1024).decode("utf8")
-            print('\n> ', incoming_message)
+            print('\n>', incoming_message)
         except OSError:
             break
 
