@@ -11,12 +11,14 @@ print(c.recv(1024).decode())
 
 
 def send_msg():
-    message = input('\n> ')
+    message = input()
     c.send(bytes(message, "utf8"))
 
     if message == "-quit":
         c.close()
         print('CHAT > Disconnected Successfully!')
+        global terminate
+        terminate = True
 
 
 def receive_msg():
@@ -30,6 +32,9 @@ def receive_msg():
 
 receiver = Thread(target=receive_msg)
 receiver.start()
+terminate = False
 
 while True:
     send_msg()
+    if terminate:
+        break
