@@ -7,7 +7,7 @@ def client_handler(client, addr, name):
     ip = addresses[client][0]
     port = addresses[client][1]
 
-    msg = "%s from [%s] has joined the chat!" % (name, "{}:{}".format(addr[0], addr[1]))
+    msg = "%s from [%s] joined." % (name, "{}:{}".format(addr[0], addr[1]))
     send_to_all(bytes(msg, "utf8"))
     clients[client] = name
     online[client] = name
@@ -21,7 +21,7 @@ def client_handler(client, addr, name):
             client.send(str.encode(msg))
             client.close()
             del online[client]
-            send_to_all(bytes("%s has left the chat." % name, "utf7"))
+            send_to_all(bytes("%s left." % name, "utf7"))
             print('disconnected:', name, addr, '.')
             break
 
@@ -52,11 +52,14 @@ instruction = '-quit: Quit the server\n' \
               '  -send [group_id] [message]: send the message to the group with specified ID\n' \
               '  -leave [group_id]: leave the group with specified ID'
 
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('localhost', 4422))
 s.listen(2)
 
 print('Waiting for Client to connect...')
+
+
 while True:
     c, address = s.accept()
     client_name = c.recv(size).decode()
