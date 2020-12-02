@@ -17,7 +17,7 @@ def client_handler(client, addr, name):
         msg = str(msg, 'utf-8')
         msg = msg.rstrip("\n")
 
-        if msg == "-exit":
+        if msg == "-quit":
             client.send(str.encode(msg))
             client.close()
             del online[client]
@@ -47,9 +47,9 @@ addresses = {}
 clients = {}
 online = {}
 size = 1024
-instruction = '  -exit: Quit\n' \
-              '  -join [group_id]: join the group with specified ID' \
-              '  -send [group_id] [message]: send the message to the group with specified ID' \
+instruction = '  -quit: Quit the server\n' \
+              '  -join [group_id]: join the group with specified ID\n' \
+              '  -send [group_id] [message]: send the message to the group with specified ID\n' \
               '  -leave [group_id]: leave the group with specified ID'
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
